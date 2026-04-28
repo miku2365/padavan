@@ -156,7 +156,7 @@ struct nvram_pair router_defaults[] = {
 	{ "https_clist", DEF_HTTPS_CIPH_LIST },	/* HTTPS SSL cipher list */
 	{ "fw_dos_x", "0" },			/* DoS Attacks Protection */
 	{ "dr_enable_x", "1" },			/* Use DHCP Routes */
-	{ "mr_enable_x", "1" },			/* Multicast Routing to LAN */
+	{ "mr_enable_x", "0" },			/* Multicast Routing to LAN */
 	{ "mr_qleave_x", "1" },
 
 #if BOARD_HAS_5G_RADIO
@@ -751,7 +751,7 @@ struct nvram_pair router_defaults[] = {
 	/*SmartDNS*/
 	{ "sdns_enable", "0" },
 	{ "sdns_name", "smartdns" },
-	{ "sdns_port", "53" },
+	{ "sdns_port", "6053" },
 	{ "sdns_tcp_server", "1" },
 	{ "sdns_ipv6_server", "1" },
 	{ "sdns_redirect", "1" },
@@ -771,7 +771,7 @@ struct nvram_pair router_defaults[] = {
 	{ "sdns_ipset", "0" },
 	{ "sdns_ipset_timeout", "1" },
 	{ "sdns_as", "0" },
-	{ "sdns_ip_change", "1" },
+	{ "sdns_ip_change", "0" },
 	{ "sdns_ip_change_time", "10" },
 	{ "sdns_force_aaaa_soa", "1" },
 	{ "sdns_force_qtype_soa", "28 65" },
@@ -1023,7 +1023,7 @@ struct nvram_pair router_defaults[] = {
 	{ "front_led_usb", "1" },
 	{ "front_led_pwr", "1" },
 
-	{ "ether_igmp", "1" },
+	{ "ether_igmp", "0" },
 	{ "ether_uport", "0" },		/* WAN port in AP mode is static upstream by default */
 	{ "ether_m2u", "2" },
 	{ "ether_green", "1" },

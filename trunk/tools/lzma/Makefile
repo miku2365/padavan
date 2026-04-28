@@ -1,26 +1,28 @@
-include $(ROOTDIR)/rules.mk
+# https://www.7-zip.org
 
-PKG_NAME := lzma
-PKG_VERSION := 2409
-PKG_SOURCE := $(PKG_NAME)$(PKG_VERSION).7z
-PKG_SOURCE_URL := https://www.7-zip.org/a/
-PKG_HASH := 79b39f10b7b69eea293caa90c3e7ea07faf8f01f8ae9db1bb1b90c092375e5f3
-PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)$(PKG_VERSION)
+SRC_VER = 26.00
+SRC_NAME = 7zip-$(SRC_VER)
+SRC_URL = https://github.com/ip7z/7zip/archive/refs/tags/$(SRC_VER).tar.gz
 
-include $(INCLUDE_DIR)/package.mk
+all: download_test extract_test
+	make -j$(HOST_NCPU) -C $(SRC_NAME)/CPP/7zip/Bundles/LzmaCon -f makefile.gcc
+	cp $(SRC_NAME)/CPP/7zip/Bundles/LzmaCon/_o/lzma ./lzma
 
-define Build/Prepare
-	@echo "==> Extracting $(PKG_SOURCE)..."
-	@7z x -bd -y $(DL_DIR)/$(PKG_SOURCE) -o$(PKG_BUILD_DIR) > /dev/null
-endef
+download_test:
+	( if [ ! -f $(SRC_NAME).tar.gz ]; then \
+		wget -t5 -T20 --no-check-certificate -O $(SRC_NAME).tar.gz $(SRC_URL) || rm -f $(SRC_NAME).tar.gz; \
+	fi )
 
-define Build/Compile
-	@echo "==> Compiling $(PKG_NAME)..."
-	+$(MAKE) -C $(PKG_BUILD_DIR)/CPP/7zip/Bundles/LzmaCon -f makefile.gcc
+extract_test:
+	( if [ ! -d $(SRC_NAME) ]; then \
+		tar zxf $(SRC_NAME).tar.gz; \
+		find "$(shell pwd)"/patches -type f -name '*.patch' -print0 \
+		  | sort -z \
+		  | xargs -r -t -0 -n 1 patch -d $(SRC_NAME) -p1 -i; \
+	fi )
 
-	@echo "==> Installing $(PKG_NAME) to tools/lzma..."
-	$(INSTALL_DIR) $(ROOTDIR)/tools/lzma
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/CPP/7zip/Bundles/LzmaCon/_o/lzma $(ROOTDIR)/tools/lzma/
-endef
-
-$(eval $(call BuildPackage,lzma))
+clean:
+	if [ -f $(SRC_NAME)/CPP/7zip/Bundles/LzmaCon/makefile.gcc ] ; then \
+		make -C $(SRC_NAME)/CPP/7zip/Bundles/LzmaCon -f makefile.gcc clean; \
+	fi ; \
+	rm -f lzma

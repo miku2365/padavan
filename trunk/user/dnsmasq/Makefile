@@ -1,34 +1,34 @@
-include $(ROOTDIR)/rules.mk
+# https://thekelleys.org.uk
 
-PKG_NAME:=dnsmasq
-PKG_VERSION:=2.90
+SRC_NAME = dnsmasq-2.92
+SRC_URL  = https://thekelleys.org.uk/dnsmasq/$(SRC_NAME).tar.xz
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
-PKG_SOURCE_URL:=https://thekelleys.org.uk/dnsmasq/
-PKG_HASH:=8e50309bd837bfec9649a812e066c09b6988b73d749b7d293c06c57d46a109e4
+COPTS = -DHAVE_BROKEN_RTC -DNO_INOTIFY -DNO_AUTH -DNO_LOOP -DNO_DUMPFILE -DNO_ID
+COPTS += $(if $(CONFIG_IPV6),-DCONFIG_IPV6,-DNO_DHCP6)
+COPTS += $(if $(CONFIG_USB_SUPPORT),,-DNO_TFTP)
+COPTS += $(if $(CONFIG_FIRMWARE_INCLUDE_IPSET),,-DNO_IPSET)
+COPTS += $(if $(CONFIG_FIRMWARE_ENABLE_DNSMASQ_REGEX),-DHAVE_REGEX -DHAVE_REGEX_IPSET,)
 
-include $(INCLUDE_DIR)/package.mk
+CFLAGS += -ffunction-sections -fdata-sections -fvisibility=hidden
+LDFLAGS += -Wl,--gc-sections
 
-COPTS := -DHAVE_BROKEN_RTC -DNO_INOTIFY -DNO_AUTH -DNO_LOOP
-ifndef CONFIG_IPV6
-COPTS += -DNO_IPV6
-endif
-ifndef CONFIG_USB_SUPPORT
-COPTS += -DNO_TFTP
-endif
-ifneq ($(CONFIG_FIRMWARE_INCLUDE_IPSET),y)
-COPTS += -DNO_IPSET
-endif
+all: download_test extract_test
+	$(MAKE) -C $(SRC_NAME) COPTS="$(COPTS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
-MAKE_FLAGS := \
-	$(TARGET_CONFIGURE_OPTS) \
-	CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
-	LDFLAGS="$(TARGET_LDFLAGS)" \
-	COPTS="$(COPTS)" \
-	PREFIX=""
+download_test:
+	( if [ ! -f $(SRC_NAME).tar.xz ]; then \
+		wget -t5 -T20 --no-check-certificate -O $(SRC_NAME).tar.xz $(SRC_URL) \
+			|| rm -f $(SRC_NAME).tar.xz; \
+	fi )
 
-$(eval $(call BuildPackage,dnsmasq))
+extract_test:
+	( if [ ! -d $(SRC_NAME) ]; then \
+		tar xJf $(SRC_NAME).tar.xz; \
+		cat patches/*.patch | patch -d $(SRC_NAME) -r - -N -p1; \
+	fi )
+
+clean:
+	$(MAKE) -C $(SRC_NAME) clean
 
 romfs:
-	$(INSTALL_DIR) $(ROMFSDIR)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/dnsmasq $(ROMFSDIR)/usr/sbin/dnsmasq
+	$(ROMFSINST) $(SRC_NAME)/src/dnsmasq /usr/sbin/dnsmasq

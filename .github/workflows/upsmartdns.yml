@@ -1,0 +1,134 @@
+name: Update SmartDNS Rules
+
+on:
+  workflow_dispatch: # 允许在 GitHub Actions 页面手动触发
+  schedule:
+    - cron: '0 2 * * 0' # 设定每周日凌晨 2 点自动运行一次 (UTC时间)
+
+jobs:
+  update-rules:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出当前 padavan 仓库
+      - name: Checkout padavan
+        uses: actions/checkout@v4
+        with:
+          path: padavan
+
+      # 2. 检出 dnsmasq-china-list 仓库
+      - name: Checkout dnsmasq-china-list
+        uses: actions/checkout@v4
+        with:
+          repository: felixonmars/dnsmasq-china-list
+          path: dnsmasq-china-list
+
+      # 3. 检出 domain-list-community 仓库
+      - name: Checkout domain-list-community
+        uses: actions/checkout@v4
+        with:
+          repository: v2fly/domain-list-community
+          path: domain-list-community
+
+      # 4. 处理 dnsmasq-china-list
+      - name: Process dnsmasq-china-list
+        run: |
+          cd dnsmasq-china-list
+          make raw
+          
+          # 创建 padavan 目标目录（如果不存在）
+          mkdir -p ../padavan/trunk/user/smartdns/conf/rules
+          
+          # 将生成的 raw txt 拷贝到目标路径
+          # （注：通常 dnsmasq-china-list 的 make raw 会生成 .raw.txt，如果出错请检查生成的实际文件名）
+          cp accelerated-domains.china.raw.txt ../padavan/trunk/user/smartdns/conf/rules/accelerated-domains.china.raw.txt
+
+      # 5. 用 Python 脚本处理 domain-list-community
+      - name: Process domain-list-community
+        run: |
+          cat << 'EOF' > process_domains.py
+          import os
+
+          DATA_DIR = 'domain-list-community/data'
+          OUT_DIR = 'padavan/trunk/user/smartdns/conf/rules'
+
+          def process_list(main_file, out_file):
+              domains = set()
+              files_to_process = [main_file]
+              processed_files = set()
+
+              # 使用队列处理嵌套的 include:
+              while files_to_process:
+                  current_file = files_to_process.pop(0)
+                  if current_file in processed_files:
+                      continue
+                  processed_files.add(current_file)
+
+                  filepath = os.path.join(DATA_DIR, current_file)
+                  if not os.path.exists(filepath):
+                      print(f"Warning: {filepath} not found")
+                      continue
+
+                  with open(filepath, 'r', encoding='utf-8') as f:
+                      for line in f:
+                          # 去除行内注释和首尾空格
+                          line = line.split('#')[0].strip()
+                          
+                          if not line:
+                              continue
+                              
+                          # 处理 include
+                          if line.startswith('include:'):
+                              include_file = line.split(':')[1].strip()
+                              files_to_process.append(include_file)
+                              continue
+                              
+                          # 【新增逻辑】丢弃 SmartDNS 不支持的正则和关键字匹配
+                          if line.startswith('regexp:') or line.startswith('keyword:'):
+                              continue
+                              
+                          # 【新增逻辑】去除 full: 和 domain: 前缀
+                          if line.startswith('full:'):
+                              line = line[5:].strip()
+                          elif line.startswith('domain:'):
+                              line = line[7:].strip()
+                              
+                          # 去除后缀并提取域名
+                          domain = line.split('@')[0].strip()
+                          if domain:
+                              domains.add(domain)
+
+              os.makedirs(OUT_DIR, exist_ok=True)
+              # 去重并排序后写入文件
+              with open(os.path.join(OUT_DIR, out_file), 'w', encoding='utf-8') as f:
+                  for d in sorted(domains):
+                      f.write(d + '\n')
+              print(f"Generated {out_file} with {len(domains)} domains.")
+
+          # 分别处理 alibaba, tencent, bytedance
+          process_list('alibaba', 'domains-ali.txt')
+          process_list('tencent', 'domains-tencent.txt')
+          process_list('bytedance', 'domains-bytedance.txt')
+          EOF
+          
+          # 执行 Python 脚本
+          python3 process_domains.py
+
+      # 6. 提交并推送修改到 padavan 仓库
+      - name: Commit and Push changes
+        run: |
+          cd padavan
+          # 配置 git bot 账户
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # 添加修改的内容
+          git add trunk/user/smartdns/conf/rules/
+          
+          # 检查是否有文件改动，有才提交，避免工作流因为空提交报错
+          if ! git diff --staged --quiet; then
+            git commit -m "Auto-update smartdns domain rules"
+            git push
+          else
+            echo "No changes to commit."
+          fi
