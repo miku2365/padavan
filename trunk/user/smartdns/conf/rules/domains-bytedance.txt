@@ -253,6 +253,7 @@ emr-volces.com
 extlog.snssdk.com
 faceu.com
 falconsending.com
+fanqiecopyright.com
 fanqienovel.com
 fanqieopen.com
 fanqieopenpic.com
@@ -303,6 +304,7 @@ fqnovelop.com
 fqnovelpic.com
 fqnovelstatic.com
 fqnovelvod.com
+fqopenplatform.com
 frontier-lark-lb-v3.lf.bytelb.net
 gcloudcache.com
 getfeishu.cn
