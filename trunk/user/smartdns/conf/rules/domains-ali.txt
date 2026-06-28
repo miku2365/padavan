@@ -13,6 +13,7 @@ a-map.link
 a-map.vip
 a.alimama.cn
 aaid.umeng.com
+account-cn.alibabacloud.com
 acjs.aliyun.com
 acloudrender.com
 ad.api.3g.youku.com
@@ -55,10 +56,12 @@ alibabacloud.com.my
 alibabacloud.com.sg
 alibabacloud.com.tw
 alibabacorp.com
+alibabadesign.com
 alibabadns.com
 alibabadoctor.com
 alibabafuturehotel.com
 alibabagroup.com
+alibabapictures.com
 alibabaplanet.com
 alibabaued.com
 alibabausercontent.com
@@ -73,10 +76,12 @@ aliexpress.com
 aliexpress.ru
 alifanyi.com
 aligames.com
+aligenie.com
 aligfwaf.com
 alihealth.cn
 alihealth.com.cn
 alihealth.hk
+alihive.com
 aliimg.com
 alikmd.com
 alikunlun.com
@@ -136,6 +141,8 @@ antfin.com
 antfortune.com
 antgroup-inc.cn
 antgroup.com
+ap-southeast-1.aliyuncs.com
+api.alibabacloud.com
 ar.umeng.com
 asczwa.com
 asczxcefsv.com
@@ -160,6 +167,9 @@ ccs.umeng.com
 cdngslb.com
 cheng.xin
 cloudeagle.cn
+cn-hangzhou.aliyuncs.com
+cn-shanghai.aliyuncs.com
+cn.alibabacloud.com
 cnlogs.umeng.com
 cnlogs.umengcloud.com
 cnzz.com
@@ -183,6 +193,7 @@ dongting.com
 doservice.com
 dratio.com
 dualstack-logs.amap.com
+duanqu.com
 e.stat.ykimg.com
 ele.me
 ele.to
@@ -217,6 +228,7 @@ hemamax.com
 hemaos.com
 hemashare.cn
 hichina.com
+hupan.com
 ialicdn.com
 ica-alliance.org
 iconfont.cn
@@ -227,6 +239,7 @@ iuynfg.com
 jhgtgb.com
 jiaoyimao.cn
 jiaoyimao.com
+jiyoujia.com
 juhuasuan.com
 kanbox.com
 kaola.com
@@ -278,6 +291,7 @@ mashort.cn
 mdeer.com
 mei.com
 miaostreet.com
+miaoya.cn
 mmstat.com
 mobilemsg.youku.com
 mobmore.com
@@ -290,9 +304,11 @@ nbsdk-baichuan.alicdn.com
 nbsdk-baichuan.taobao.com
 new-aaid.umeng.com
 new-aaid.umeng.com.gds.alibabadns.com
+newstjk.com
 nic.xin
 npmmirror.com
 oc.umeng.com
+open-uc.cn
 optimus-ads.amap.com
 oss-ap-northeast-1.aliyuncs.com
 oss-ap-northeast-2.aliyuncs.com
@@ -338,12 +354,14 @@ retcode.taobao.com
 rexpos.cn
 s-adashx.ut.youku.com
 saee.org.cn
+shejijia.com
 shenjing.com
 shujupie.com
 shuqi.com
 shuqiapi.com
 shuqiread.com
 shuqireader.com
+shuqistat.com
 shyhhema.com
 sm.cn
 soku.com
@@ -351,6 +369,7 @@ sparenode.com
 sqreader.com
 stat.youku.com
 statis.api.3g.youku.com
+status.alibabacloud.com
 supet.com
 tanx.com
 taobao
@@ -377,8 +396,10 @@ tns.simba.taobao.com
 track.lc.quark.cn
 ttpod.com
 tudou.com
+uc-engine.cn
 uc.cn
 uc123.com
+ucfly.com
 ucweb.com
 uczzd.cn
 ulogs.umeng.com
