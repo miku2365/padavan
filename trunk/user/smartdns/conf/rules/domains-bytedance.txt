@@ -253,6 +253,7 @@ cozesdk.com
 cozetest.cn
 cozetest2.cn
 cozetest3.cn
+csjplatform.com
 ctobsnssdk.com
 datawindexmarket.com
 dbbuilding.fun
@@ -541,6 +542,7 @@ p8-juejin.byteimg.com
 p9-ad-sign.byteimg.com
 p9-juejin.byteimg.com
 pacmantwo.com
+pangle.cn
 pangolin-dsp-toutiao-b.com
 pangolin-dsp-toutiao.com
 pangolin-hl.snssdk.com
@@ -898,6 +900,7 @@ xiguavideo.net
 xitu.io
 xsgtvacct.com
 xyf61.cn
+yhgfb-cn-static.com
 yoma.cn
 ytxptd.cn
 ytxptz.cn
