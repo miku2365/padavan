@@ -172,7 +172,11 @@ ccs.umeng.com
 cdngslb.com
 cheng.xin
 cloudeagle.cn
+cn-beijing.aliyuncs.com
+cn-chengdu.aliyuncs.com
+cn-guangzhou.aliyuncs.com
 cn-hangzhou.aliyuncs.com
+cn-hongkong.aliyuncs.com
 cn-shanghai.aliyuncs.com
 cn.alibabacloud.com
 cnlogs.umeng.com
@@ -235,6 +239,7 @@ hemamax.com
 hemaos.com
 hemashare.cn
 hichina.com
+hotfix-api.aliyuncs.com
 hupan.com
 hzchengdun.com
 hzchengdun.net
@@ -359,6 +364,7 @@ pp.cn
 puata.info
 qingtingtrip.com
 quark.cn
+registry.aliyuncs.com
 resolve.umeng.com
 retcode.taobao.com
 rexpos.cn
