@@ -31,6 +31,7 @@ amemv.net
 analytics.tiktok.com
 anycross.com
 api-building.fun
+applogcdn.com
 arco.design
 ark-doc-resources.cn
 auto-validation.com
@@ -608,6 +609,7 @@ rtlog5-applog.fqnovel.com
 samasty.com
 sealsuite.com
 sealsuite.net
+searchpstatp.com
 searchstatic.com
 searchtoutiaolive.com
 securityfeishu.cn
