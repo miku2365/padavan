@@ -288,6 +288,7 @@ douyincloud.run
 douyinec.com
 douyinfe.com
 douyinliving.com
+douyinmusicpromotion.com
 douyinpay.com
 douyinpic.com
 douyinstatic.com
@@ -483,6 +484,7 @@ larksuiteimg-boe.com
 larksuiteimg-pre.com
 larksuiteimg.com
 larkvc.com
+letsign.com
 lifexue.com
 livecdnstatic.com
 livesaascdn.com
@@ -905,6 +907,7 @@ wukongwenda.cn
 wukongwenda.com
 xck31.cn
 xflowedge.com
+xiaohe.cn
 xiaoxiaapi.com
 xiguaapp.cn
 xiguaapp.com
@@ -912,6 +915,7 @@ xiguashipin.cn
 xiguashipin.net
 xiguavideo.cn
 xiguavideo.net
+xingtu.cn
 xitu.io
 xsgtvacct.com
 xyf61.cn
